@@ -1,0 +1,21 @@
+---
+- name: Install Start Packages
+  hosts: bitrix
+  become: yes
+
+  tasks:
+
+     - name: Upgrade all packages
+       yum:
+        name: '*'
+        state: latest
+
+     - name: Install a list of packages
+       yum:
+        name:
+         - mc
+         - wget
+         - net-tools
+         - vim
+         - qemu-guest-agent
+        state: latest
