@@ -8,7 +8,7 @@
   file:
     owner: opendkim
     path: "{{ postfix_dir }}/dkim"
-    mode: 0770
+    mode: 0775
     state: directory
 
 - block: # === Block for Config Opendkim
