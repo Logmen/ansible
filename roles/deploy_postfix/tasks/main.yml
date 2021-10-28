@@ -1,0 +1,49 @@
+---
+- name: Install a list of packages
+  yum:
+    name: postfix
+    state: latest
+
+- name: Make directory for Certs
+  file:
+    owner: root
+    group: root
+    path: "{{ certs_dir }}"
+    mode: 0770
+    state: directory
+
+- name: Generate an OpenSSL Certificate Signing Request
+  community.crypto.x509_certificate:
+    path: "{{ certs_dir }}/{{ domain }}.crt"
+    privatekey_path: "{{ certs_dir }}/{{ domain }}.pem"
+    provider: selfsigned
+
+- name: Generate Postfix Main.cf
+  template:
+    src: main.j2
+    dest: "{{ postfix_dir }}/main.cf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Generate Master.cf
+  template:
+    src: master.j2
+    dest: "{{ postfix_dir }}/master.cf"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Generate Msmtprc
+  template:
+    src: msmtprc.j2
+    dest: "{{ bitrix_dir }}/.msmtprc"
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Start & enable service PostFix
+  service:
+    name: postfix
+    state: started
+    enabled: yes

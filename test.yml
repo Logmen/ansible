@@ -1,0 +1,10 @@
+---
+
+- name: check for proper response
+  uri:
+    url: http://localhost
+    return_content: yes
+  register:   result
+  until:   '"ANSIBLE" in result.content'
+  retries: 3
+  delay: 1

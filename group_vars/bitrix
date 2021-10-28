@@ -1,0 +1,8 @@
+---
+
+
+ansible_user                 : root
+ansible_connection           : ssh
+ansible_private_key_file     : /home/user/.ssh/id_rsa
+www_dir                      : /home/bitrix/www
+bitrix_dir                   : /home/bitrix

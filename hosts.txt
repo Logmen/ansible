@@ -1,0 +1,6 @@
+[staging]
+ec4 ansible_host=ec2-18-223-235-100.us-east-2.compute.amazonaws.com ansible_user=ubuntu owner=Nick
+ec3 ansible_host=ec2-3-135-63-77.us-east-2.compute.amazonaws.com owner=Ted
+[bitrix]
+test.server ansible_host=185.253.8.57 name=srv1
+

@@ -1,0 +1,16 @@
+- name: Install Webp
+hosts: bitrix
+become: yes
+vars:
+  www_dir : /home/bitrix/www
+
+  tasks:
+
+    - name: Add tasks to Crontab
+    cron:
+      name: "img2webp"
+      minute:   "0"
+      hour: "3"
+      job:    "/usr/bin/php {{ www_dir }}/cron/img2webp.php --q=80 --dir={{ www_dir }}/images"
+      user: bitrix
+      state:   absent

@@ -1,0 +1,14 @@
+- name: Install BitrixVM
+  hosts: bitrix
+  become: yes
+
+  tasks:
+  - name: Download Bitrix
+    get_url:
+       url: https://repos.1c-bitrix.ru/yum/bitrix-env.sh
+       dest: /root/
+       mode: '0755'
+
+  - name: Install Bitrix
+    shell: /root/bitrix-env.sh -s -p >> /var/log/bitrix-install
+    ignore_errors: true

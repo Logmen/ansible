@@ -1,0 +1,6 @@
+- name: Install & Config PostFix
+  hosts: bitrix
+  become: yes
+
+  roles:
+    - deploy_postfix

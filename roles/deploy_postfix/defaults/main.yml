@@ -1,0 +1,4 @@
+---
+certs_dir: /etc/postfix/certs
+postfix_dir: /etc/postfix
+domain: test.org
