@@ -1,2 +1,8 @@
 ---
-# vars file for deploy_postfix
+domain: test.org
+key_size: 4096
+passphrase: # Set if you want passphrase
+key_type: RSA # Others include DSA, ECC, Ed25519, Ed448, X25519, X448
+country_name: KZ
+email_address: admin@test.org
+organization_name: Test

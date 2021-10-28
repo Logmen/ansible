@@ -9,13 +9,30 @@
     owner: root
     group: root
     path: "{{ certs_dir }}"
-    mode: 0770
+    mode: 0755
     state: directory
 
-- name: Generate an OpenSSL Certificate Signing Request
-  community.crypto.x509_certificate:
-    path: "{{ certs_dir }}/{{ domain }}.crt"
-    privatekey_path: "{{ certs_dir }}/{{ domain }}.pem"
+- name: Generate an OpenSSL private key
+  openssl_privatekey:
+    path: "{{ certs_dir }}/{{ domain }}_privkey.pem"
+    size: "{{ key_size }}"
+    type: "{{ key_type }}"
+    backup: yes
+
+- name: Generate an OpenSSL Certificate Signing Request with Subject information
+  openssl_csr:
+    path: "{{ certs_dir }}/{{ domain }}.csr"
+    privatekey_path: "{{ certs_dir }}/{{ domain }}_privkey.pem"
+    country_name: "{{ country_name }}"
+    organization_name: "{{ organization_name }}"
+    email_address: "{{ email_address }}"
+    common_name: "{{ domain }}"
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: "{{ certs_dir }}/{{ domain }}_cert.pem"
+    privatekey_path: "{{ certs_dir }}/{{ domain }}_privkey.pem"
+    csr_path: "{{ certs_dir }}/{{ domain }}.csr"
     provider: selfsigned
 
 - name: Generate Postfix Main.cf
