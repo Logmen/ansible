@@ -1,3 +1,4 @@
 ---
 postfix_dir: /etc/postfix
-domain: test.org
+domain: test.onelab.kz
+short_domain: tob
