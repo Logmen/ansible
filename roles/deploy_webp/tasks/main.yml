@@ -22,12 +22,12 @@
 - name: Build WebP with Magic
   shell: "{{ item }}"
   args:
-    chdir:   "{{ webp_dir }}{{ webp_version }}"
+    chdir: "{{ webp_dir }}{{ webp_version }}"
   loop:
     - ./configure
 
 - name: Install the WebP
-  community.general.make:
+  make:
     chdir: "{{ webp_dir }}{{ webp_version }}"
     target: install
 
@@ -40,20 +40,35 @@
     state: directory
 
 - name: Generate my img2webp
-  template: src=img2webp.j2  dest={{ www_dir }}/cron/img2webp.php  owner=bitrix group=bitrix mode=0644
+  template: 
+    src: img2webp.j2  
+    dest: "{{ www_dir }}/cron/img2webp.php"  
+    owner: bitrix 
+    group: bitrix 
+    mode: 0644
 
 - name: Generate my Webp NGINX Config
-  template: src=webp.j2  dest={{ nginx_conf_dir }}/webp.conf  owner=bitrix group=bitrix mode=0644
+  template: 
+    src: webp.j2  
+    dest: "{{ nginx_conf_dir }}/webp.conf"  
+    owner: bitrix 
+    group: bitrix 
+    mode: 0644
 
 - name: Generate Bitrix General Config
-  template: src=bitrix_general.j2  dest={{ nginx_conf_dir }}/bitrix_general.conf  owner=bitrix group=bitrix mode=0644
+  template: 
+    src: bitrix_general.j2  
+    dest: "{{ nginx_conf_dir }}/bitrix_general.conf"  
+    owner: bitrix 
+    group: bitrix 
+    mode: 0644
   notify: restart nginx
 
 - name: Creates a cron file under /etc/cron.d
-  ansible.builtin.cron:
+  cron:
     name: webp
-    minute: "50"
-    hour: "16"
+    minute: "0"
+    hour: "3"
     user: bitrix
     job: "{{ php_dir }} {{ www_dir }}/cron/img2webp.php --q=80 --dir={{ www_dir }}"
     cron_file: ansible_webp
