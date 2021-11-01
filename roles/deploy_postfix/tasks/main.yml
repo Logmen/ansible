@@ -24,9 +24,12 @@
     path: "{{ certs_dir }}/{{ domain }}.csr"
     privatekey_path: "{{ certs_dir }}/{{ domain }}_privkey.pem"
     country_name: "{{ country_name }}"
+    state_or_province_name:  "{{ state_or_province }}"
+    locality_name: "{{ locality_name }}"
     organization_name: "{{ organization_name }}"
     email_address: "{{ email_address }}"
     common_name: "{{ domain }}"
+
 
 - name: Generate a Self Signed OpenSSL certificate
   openssl_certificate:

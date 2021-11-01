@@ -1,0 +1,2 @@
+tob._domainkey	IN	TXT	( "v=DKIM1; k=rsa; "
+	  "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDou8no0jjcks9txE47VdjzZ4cOIMejUrIfCszCUEdyCdklHRozNC65BrnUn9X59rHvNSx+36c7TJtqVJxuZPB7oAcTey8NrM6/0tOc9JMj1KUdHcK9AwEl+45xQytdjeAEXTmvIuQ/vBDWlmlgUlKa0WAJl07WjA47jB+/iCZGswIDAQAB" )  ; ----- DKIM key tob for no-reply@test.onelab.kz

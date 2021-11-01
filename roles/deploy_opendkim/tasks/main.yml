@@ -14,9 +14,9 @@
 - block: # === Block for Config Opendkim
 
     - name: Generate Key for DKIM
-      command: opendkim-genkey -D {{ postfix_dir }}/dkim -d no-reply@{{ domain }} -s tg
+      command: opendkim-genkey -D {{ postfix_dir }}/dkim -d no-reply@{{ domain }} -s {{ short_domain }}
       args:
-        creates: "{{ postfix_dir }}/dkim/tg.private"
+        creates: "{{ postfix_dir }}/dkim/{{ short_domain }}.private"
 
     - name: Generate Opendkim Config
       template:
@@ -40,7 +40,7 @@
 
     - name: Change Key ownership and permissions
       file:
-        path: "{{ postfix_dir }}/dkim/tg.private"
+        path: "{{ postfix_dir }}/dkim/{{ short_domain }}.private"
         owner: opendkim
         mode: '0600'
 
@@ -62,8 +62,8 @@
     state: started
     enabled: yes
 
-- name: Display tg.txt for DNS
-  command: cat {{ postfix_dir }}/dkim/tg.txt
+- name: Display dkim id .txt for DNS
+  command: cat {{ postfix_dir }}/dkim/{{ short_domain }}.txt
   register: command_output
 
 - name: Print DNS
@@ -72,5 +72,5 @@
 
 - name: Copy DNS to master
   fetch:
-    src: "{{ postfix_dir }}/dkim/tg.txt"
-    dest: ./dns
+    src: "{{ postfix_dir }}/dkim/{{ short_domain }}.txt"
+    dest: /home/user/ansible/dns
